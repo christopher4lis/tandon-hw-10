@@ -70,7 +70,7 @@ int main() {
     string name;
     while (employeesFile >> id >> payRate) {
         employeesFile.ignore(9999, ' ');
-        getline(employeesFile, name);
+        getline(employeesFile, name, '\r');
         employeeList.insertAtEnd(Employee(id, payRate, name));
     }
     employeesFile.close();
