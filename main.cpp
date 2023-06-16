@@ -4,6 +4,10 @@
 using namespace std;
 
 template<typename GenericType> class LinkedList;
+
+// ------------------------
+// LinkedListNode
+// ------------------------
 template<typename GenericType> class LinkedListNode {
     GenericType data;
     LinkedListNode<GenericType>* next;
@@ -16,6 +20,9 @@ template<typename GenericType> class LinkedListNode {
     friend class LinkedList<GenericType>;
 };
 
+// ------------------------
+// LinkedList
+// ------------------------
 template <typename GenericType> class LinkedList {
     LinkedListNode<GenericType>* head = nullptr;
 
@@ -38,57 +45,6 @@ public:
     void sortList();
     void printPayrollInfo() const;
 };
-
-class Employee {
-    int id;
-    float payRate;
-    string name;
-    int hoursWorked;
-
-public:
-    Employee(int newId = 0, float newPayRate = 0.0, string newName = "", int newHoursWorked = 0)
-            : id(newId), payRate(newPayRate), name(newName), hoursWorked(newHoursWorked) {}
-
-    // class methods
-    void addHours(int hours);
-    float getPay() const;
-    string getName() const;
-    int getId() const;
-
-    bool operator<(const Employee& other) const {
-        return getPay() > other.getPay();
-    }
-};
-
-int main() {
-    ifstream employeesFile("emps.txt");
-    ifstream hoursFile("hours.txt");
-    LinkedList<Employee> employeeList;
-
-    int id;
-    float payRate;
-    string name;
-    while (employeesFile >> id >> payRate) {
-        employeesFile.ignore(9999, ' ');
-        getline(employeesFile, name, '\r');
-        employeeList.insertAtEnd(Employee(id, payRate, name));
-    }
-    employeesFile.close();
-
-    int hours;
-    while (hoursFile >> id >> hours) {
-        Employee* employee = employeeList.findEmployeeById(id);
-        if (employee) {
-            employee->addHours(hours);
-        }
-    }
-    hoursFile.close();
-
-    employeeList.sortList();
-    employeeList.printPayrollInfo();
-
-    return 0;
-}
 
 template <typename GenericType> void LinkedList<GenericType>::insertAtHead(GenericType newData) {
     head = new LinkedListNode<GenericType>(newData, head);
@@ -165,6 +121,33 @@ template <typename GenericType> void LinkedList<GenericType>::printPayrollInfo()
     cout << "*********End payroll**************\n";
 }
 
+
+
+
+// ------------------------
+// Employee
+// ------------------------
+class Employee {
+    int id;
+    float payRate;
+    string name;
+    int hoursWorked;
+
+public:
+    Employee(int newId = 0, float newPayRate = 0.0, string newName = "", int newHoursWorked = 0)
+            : id(newId), payRate(newPayRate), name(newName), hoursWorked(newHoursWorked) {}
+
+    // class methods
+    void addHours(int hours);
+    float getPay() const;
+    string getName() const;
+    int getId() const;
+
+    bool operator<(const Employee& other) const {
+        return getPay() > other.getPay();
+    }
+};
+
 void Employee::addHours(int hours) {
     hoursWorked += hours;
 }
@@ -180,3 +163,39 @@ string Employee::getName() const {
 int Employee::getId() const {
     return id;
 }
+
+
+// ------------------------
+// main
+// ------------------------
+int main() {
+    ifstream employeesFile("emps.txt");
+    ifstream hoursFile("hours.txt");
+    LinkedList<Employee> employeeList;
+
+    int id;
+    float payRate;
+    string name;
+    while (employeesFile >> id >> payRate) {
+        employeesFile.ignore(9999, ' ');
+        getline(employeesFile, name, '\r');
+        employeeList.insertAtEnd(Employee(id, payRate, name));
+    }
+    employeesFile.close();
+
+    int hours;
+    while (hoursFile >> id >> hours) {
+        Employee* employee = employeeList.findEmployeeById(id);
+        if (employee) {
+            employee->addHours(hours);
+        }
+    }
+    hoursFile.close();
+
+    employeeList.sortList();
+    employeeList.printPayrollInfo();
+
+    return 0;
+}
+
+
