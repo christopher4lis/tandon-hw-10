@@ -1,0 +1,3 @@
+/Users/christopherlis/CLionProjects/hw10/cmake-build-debug/CMakeFiles/hw10.dir
+/Users/christopherlis/CLionProjects/hw10/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/christopherlis/CLionProjects/hw10/cmake-build-debug/CMakeFiles/rebuild_cache.dir
