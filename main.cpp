@@ -5,6 +5,7 @@ using namespace std;
 
 template<typename GenericType> class LinkedList;
 
+
 // ------------------------
 // LinkedListNode
 // ------------------------
@@ -20,6 +21,7 @@ template<typename GenericType> class LinkedListNode {
     friend class LinkedList<GenericType>;
 };
 
+
 // ------------------------
 // LinkedList
 // ------------------------
@@ -31,15 +33,8 @@ public:
         head = newData;
     }
 
-    ~LinkedList() {
-        clear();
-    }
-
-    // class methods
     void insertAtHead(GenericType newData);
-    void clear();
     bool isEmpty() const;
-    int size() const;
     void insertAtEnd(GenericType newData);
     GenericType* findEmployeeById(int id);
     void sortList();
@@ -50,27 +45,8 @@ template <typename GenericType> void LinkedList<GenericType>::insertAtHead(Gener
     head = new LinkedListNode<GenericType>(newData, head);
 }
 
-template <typename GenericType> void LinkedList<GenericType>::clear() {
-    LinkedListNode<GenericType>* temp;
-    while (head != nullptr) {
-        temp = head;
-        head = head->next;
-        delete temp;
-    }
-}
-
 template <typename GenericType> bool LinkedList<GenericType>::isEmpty() const {
     return head == nullptr;
-}
-
-template <typename GenericType> int LinkedList<GenericType>::size() const {
-    int count = 0;
-    LinkedListNode<GenericType>* temp = head;
-    while (temp != nullptr) {
-        count++;
-        temp = temp->next;
-    }
-    return count;
 }
 
 template <typename GenericType> void LinkedList<GenericType>::insertAtEnd(GenericType newData) {
@@ -122,8 +98,6 @@ template <typename GenericType> void LinkedList<GenericType>::printPayrollInfo()
 }
 
 
-
-
 // ------------------------
 // Employee
 // ------------------------
@@ -138,31 +112,15 @@ public:
             : id(newId), payRate(newPayRate), name(newName), hoursWorked(newHoursWorked) {}
 
     // class methods
-    void addHours(int hours);
-    float getPay() const;
-    string getName() const;
-    int getId() const;
+    void addHours(int hours) { hoursWorked += hours; }
+    float getPay() const { return payRate * hoursWorked; }
+    string getName() const { return name; }
+    int getId() const { return id; }
 
     bool operator<(const Employee& other) const {
         return getPay() > other.getPay();
     }
 };
-
-void Employee::addHours(int hours) {
-    hoursWorked += hours;
-}
-
-float Employee::getPay() const {
-    return payRate * hoursWorked;
-}
-
-string Employee::getName() const {
-    return name;
-}
-
-int Employee::getId() const {
-    return id;
-}
 
 
 // ------------------------
